@@ -34,5 +34,16 @@ class Kiwoom(QAxWidget):
     def get_account_number(self, tag='ACCNO'):
         account_list = self.dynamicCall('GetLoginInfo(QString)', tag)
         account_number = account_list.split(';')[0]
-        print(account_number)
+        print('나의 계좌번호는 : ' + account_number)
         return account_number
+    
+    # 종목 코드 가져오기
+    def get_code_list_by_market(self, market_type):
+        code_list = self.dynamicCall("GetCodeListByMarket(QString)", market_type)
+        code_list = code_list.split(';')[:-1]
+        return code_list
+    
+    # 종목명 가져오기
+    def get_master_code_name(self, code): # 종목코드를 받아 종목명을 반환하는 함수
+        code_name = self.dynamicCall('GetMasterCodeName(QString)', code)
+        return code_name
